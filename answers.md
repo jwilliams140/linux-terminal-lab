@@ -1,4 +1,4 @@
-File Navigation and Basic Stuff
+Hard Links vs Symbolic Links
 
 1. You have a symlink pointing to /etc/config/settings.txt. The sysadmin moves that file to /etc/config/old/settings.txt and creates a new file at the original path. Your symlink still works, but now points to different data. Why did this happen and how could you have prevented it? 
 
@@ -17,5 +17,17 @@ All hardlinks will show all 150 lines because hardlinks reference the same inode
 4. You’re setting up a configuration system where a symlink in /home/user/config should always point to the active config in /opt/configs/. Why would a relative symlink break here but an absolute one wouldn’t?
 
 An absolute symlink always points to the full path while an relative symlink will not. Relative symlinks won't be able to access the same file when moved to a different location while absolute symlinks have no problem doing so.
+
+File Permissions
+
+1. You set a file to 644 but users in the group still can’t read it. The file owner is you. What could be wrong, and how would you systematically debug this?
+
+Most likely the issue is the group has permission to read the file but no permission to access it. The permissions should be changed so everyone can read 
+and write to the file which should fix the issue. Listing permissions can also confirm who has permissions and who doesn't.
+
+2. 
+
+
+
 
 
