@@ -103,6 +103,20 @@ A network will treat the commands traceroute and ping differently so they won't 
 
 Large tranfer will cause the remote server to fail due to timeouts or an unstable connection. The command rsync was meant to deal with large transfers, making it a better alternative.
 
+DNS and Name Resolution
+
+1. You run nslookup google.com and get “server can’t find google.com”, but nslookup 8.8.8.8 works fine. What’s the actual problem and what’s your next debugging step?
+
+The DNS server is either configured incorrectly or unreachable. Going to path /etc/resolv.conf would be the next debugging step.
+
+2. dig google.com returns a valid IP, but your application still can’t connect. You check /etc/hosts and it has an entry for google.com pointing to 127.0.0.1. How is this possible and which takes precedence?
+
+The path /etc/host overrides DNS results and always resolve local queries before querying external DNS ervers.
+
+3. You can ping 8.8.8.8 successfully, but ping 8.8.8.8.in-addr.arpa fails. You also can’t resolve any hostnames. What service is broken?
+
+The result of this means DNS resolution is broken depite being able to connect to a working network.
+
 
 
 
