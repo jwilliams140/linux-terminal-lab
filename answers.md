@@ -45,7 +45,7 @@ Cron runs in a minimal environment and doesn't load user environment variables o
 
 2. A script uses read NAME but you’re piping input to it: echo "John" | ./script.sh. The script doesn’t receive the name. Why, and how would you fix it?
 
-THe script might be waiting for interactive input from the user or it is calling from a different source. o get the script to read correctly, standard input should be used correctly or arguments initialized to something like like NAME = $1 to receive input.
+The script might be waiting for interactive input from the user or it is calling from a different source. o get the script to read correctly, standard input should be used correctly or arguments initialized to something like like NAME = $1 to receive input.
 
 3. You pass 5 arguments to a script but only use $1 and $2. You later realize you need to pass the remaining arguments to another command: some_command $@. What’s the difference between $@ and $* and when does it matter?
 
@@ -59,6 +59,24 @@ I think the most simple way to know the script has an error is by enabling a com
 
 When you don't use curly braces in a file name, it will split it into multiple arguments which will cause the script to break. Adding curly braces will cause the system to address it as single string.
 
+System Administration Basics
+1. uptime shows a load of 8.0 on a 4-core system. What does this actually tell you about system health, and why is it not as simple as “the system is overloaded”?
 
+An uptime load of 8.0 means on a 4 core system, there are twice as many processes running at the momnent. It doesn't mean the system is failing but it most likely means some processes are in a queue.
 
+2. You discover /home is 95% full. You run du -sh /home/* but the sum is way less than the total size. Where did the space go and how would you actually find it?
+
+The missing space could be occupied by hidden or deleted file being run by ongoing processes or files in a directory that is not included in the command.
+
+3. You see a process in htop using 50GB of memory but ps aux shows it only allocated 2GB. How is this possible and what’s the difference between what these tools are measuring?
+
+The command htop only displays virtual or cached memory usgae while ps how only resident memory. Virtual memory is not actively used so that is the reason why all memory will not how when using certain commands.
+
+4. You add an environment variable to ~/.bashrc by appending a line, but when you open a new terminal it’s not there. You double-check the file and the line is there. What’s wrong?
+
+Some login shells do not load .bashrc and load different profiles instead of .bashrc. Including .bashrc in the login shell configuration should fix the issue.
+
+5. A service is crashing repeatedly. You check journalctl but the last log entry is from 10 minutes ago, even though you know it crashed 30 seconds ago. Where else would you look for logs and why?
+
+Log files are sometimes logged to a different location. Applications do this at time so it's best to check other direectories to locate application specific log.
 
