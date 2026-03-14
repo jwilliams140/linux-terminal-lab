@@ -80,3 +80,29 @@ Some login shells do not load .bashrc and load different profiles instead of .ba
 
 Log files are sometimes logged to a different location. Applications do this at time so it's best to check other direectories to locate application specific log.
 
+Networking Basics
+
+1. You run nc -zv server.com 8080 and it times out, but ping server.com succeeds. The server admin says the service is definitely running. What layer of the network stack is the problem at, and how would you prove it?
+
+The network layer is working as it should but it's either the server is not listening on that port or a firewall is blocking it from connecting with the server. I think turning off of the firewall could pave a way for the server to start listening on that port.
+
+2. You compare ss -tuln and netstat -tuln output on the same system and get slightly different results. Why might this happen and which one should you trust?
+
+The command ss is much newer and more reliable than netstat. Using netstat will get much different information than ss because of it being a little outdated but still accessible command when needed.
+
+3. You want to SSH to a server on port 2222, but you also need to forward a local port for development. What would your full command look like and why might this be safer than opening port 22?
+
+ssh -L 8080:localhost:8080 -p 2222 user@server
+This command forwards a local port to a remote service that won't expost services directly.
+
+4. traceroute server.com shows 20 hops but ping server.com returns in milliseconds. Something is very wrong. Is the server definitely reachable and why would traceroute show so many hops?
+
+A network will treat the commands traceroute and ping differently so they won't always give the same results. Also traceroute may follow different routes or even be limited by routers, causing the data to delay.
+
+5. You want to copy a 10GB file from a remote server but scp keeps timing out. What could be wrong, and what’s a more robust approach?
+
+Large tranfer will cause the remote server to fail due to timeouts or an unstable connection. The command rsync was meant to deal with large transfers, making it a better alternative.
+
+
+
+
