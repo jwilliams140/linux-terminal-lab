@@ -25,7 +25,9 @@ File Permissions
 Most likely the issue is the group has permission to read the file but no permission to access it. The permissions should be changed so everyone can read 
 and write to the file which should fix the issue. Listing permissions can also confirm who has permissions and who doesn't.
 
-2. 
+2. A script is 755 and owned by root. A regular user can execute it, but when the script tries to write to a file in /var/log/, it fails with “Permission denied”. Why, and what’s the security implication?
+
+ A regular user can't run a script that has elevated permissions especially if it has to do with system logs. System logs can't be modified by unauthorized users and this is why the system reacts this way when attempting to access it. 
 
 
 
