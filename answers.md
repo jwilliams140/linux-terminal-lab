@@ -27,8 +27,15 @@ and write to the file which should fix the issue. Listing permissions can also c
 
 2. A script is 755 and owned by root. A regular user can execute it, but when the script tries to write to a file in /var/log/, it fails with “Permission denied”. Why, and what’s the security implication?
 
- A regular user can't run a script that has elevated permissions especially if it has to do with system logs. System logs can't be modified by unauthorized users and this is why the system reacts this way when attempting to access it. 
+A regular user can't run a script that has elevated permissions especially if it has to do with system logs. System logs can't be modified by unauthorized users and this is why the system reacts this way when attempting to access it. 
 
+3. Your application needs to create files in /tmp that only the owner can read, but it needs to be run by multiple different users. If you just chmod 600 the directory, what breaks and why?
+
+Using chmod 600 will make it where no other user than you will be able to read and write to the file. Other users beside you should get execute permissions so they can be able to access the file with you.
+
+4. You have a directory that’s drwxr-xr-x but you want to prevent others from listing the contents while still letting them access files if they know the name. What permission would you use and why does the execute bit matter here?
+
+The correct command to use would be chmod 711. Chmod 711 removes the read permissions for users and removing execute privileges will make it where users can't list any content of a file even if they know it's name.
 
 
 
