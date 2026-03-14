@@ -8,3 +8,9 @@ This could have been prevented by using a hard link to the original file, which 
 You delete all hardlinks to a file, but the inode still exists and the data isn’t freed. What’s keeping the file alive?
 
 Even though the hardlinks are deleted, running processes is what keeps the file alive. The data will be freed once the running process is terminated.
+
+You create 10 hardlinks to a file and then delete the original. You edit one of the hardlinks and add 50 lines. How many of the remaining hardlinks now have 150 lines, and why?
+
+All hardlinks will show all 150 lines because hardlinks reference the same inode and data which point to the same file whenever a change takes effect.
+
+
