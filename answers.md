@@ -37,6 +37,28 @@ Using chmod 600 will make it where no other user than you will be able to read a
 
 The correct command to use would be chmod 711. Chmod 711 removes the read permissions for users and removing execute privileges will make it where users can't list any content of a file even if they know it's name.
 
+Shell Scripts
+
+1. You write a script with #!/bin/bash but it still fails when run as ./script.sh from the cron daemon. The same script works fine when you run it manually. What’s likely wrong?
+
+Cron runs in a minimal environment and doesn't load user environment variables or path settings. You have to use absolute paths and define required environment variables in the script to get it to run.
+
+2. A script uses read NAME but you’re piping input to it: echo "John" | ./script.sh. The script doesn’t receive the name. Why, and how would you fix it?
+
+THe script might be waiting for interactive input from the user or it is calling from a different source. o get the script to read correctly, standard input should be used correctly or arguments initialized to something like like NAME = $1 to receive input.
+
+3. You pass 5 arguments to a script but only use $1 and $2. You later realize you need to pass the remaining arguments to another command: some_command $@. What’s the difference between $@ and $* and when does it matter?
+
+$@ expands each argument into a separate quoted value while $* combines all arguments into a single string. The difference between the two i $@ will preerve it's original structure and should be taken into consideration before using for specific reasons.
+
+4. You have a function that returns 1 on error, but your script doesn’t check the return value and continues anyway. Later, your script appears to run successfully but actually failed silently. How would you structure your script to catch errors earlier?
+
+I think the most simple way to know the script has an error is by enabling a command such as set -e at a line you believe can cause an error and exit out of the script once that fails.
+
+5. You write a loop: for file in *.txt; do process "$file"; done. If a filename has spaces in it, what breaks and how would you fix it?
+
+When you don't use curly braces in a file name, it will split it into multiple arguments which will cause the script to break. Adding curly braces will cause the system to address it as single string.
+
 
 
 
